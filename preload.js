@@ -1,5 +1,5 @@
-import { contextBridge, ipcRenderer } from 'electron';
+const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('electronAPI', {
-    selectKoboDirectory: () => ipcRenderer.invoke('select-kobo-directory')
-});  
+contextBridge.exposeInMainWorld('electron', {
+  selectFolder: () => ipcRenderer.invoke('select-folder'),
+});

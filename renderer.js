@@ -1,10 +1,11 @@
-import { renderTable } from './ui/tableRenderer.js';
-
-document.getElementById('select-dir').addEventListener('click', async () => {
-    const response = await window.electronAPI.selectKoboDirectory();
-    if (response.error) {
-        alert('Error: ' + response.error);
+document.getElementById('select-folder').addEventListener('click', async () => {
+    const data = await window.electron.selectFolder();
+  
+    if (data.length > 0) {
+      localStorage.setItem('annotations', JSON.stringify(data));
+      window.location.href = 'ui/results.html'; // Navigate to results page
     } else {
-        renderTable(response.annotations);
+      alert('No annotations found or action was cancelled.');
     }
-}); 
+  });
+  
