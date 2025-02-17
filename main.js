@@ -33,4 +33,4 @@ ipcMain.handle('select-kobo-directory', async () => {
         console.error('Error in main process:', error);
         return { error: error.message };
     }
-});  
+}); 
