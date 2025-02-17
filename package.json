@@ -1,13 +1,13 @@
 {
   "name": "kobo-utils",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An Electron app to display annotations from your Kobo device",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "test": "mocha tests"
+    "test": "mocha tests",
+    "package-mac": "electron-packager . AnnotationsApp --platform=darwin --arch=x64 --icon=icon.icns --out=dist --overwrite",
+    "package-win": "electron-packager . AnnotationsApp --platform=win32 --arch=x64 --icon=icon.ico --out=dist --overwrite"
   },
   "build": {
     "appId": "com.example.koboannotations",
@@ -19,9 +19,10 @@
     }
   },
   "devDependencies": {
+    "chai": "^4.3.7",
     "electron": "^25.3.0",
     "electron-builder": "^24.0.0",
-    "mocha": "^10.2.0",
-    "chai": "^4.3.7"
+    "electron-packager": "^17.1.2",
+    "mocha": "^10.2.0"
   }
 }
