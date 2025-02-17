@@ -1,6 +1,6 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
-import path from 'path';
-import { readAnnotations } from './modules/annotationReader';
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');  
+const path = require('path');  
+const { readAnnotations } = require('./modules/annotationReader'); 
 
 function createWindow() {
     const win = new BrowserWindow({
