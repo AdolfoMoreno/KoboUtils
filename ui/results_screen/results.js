@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (exportSeparate) {
       localStorage.setItem('groupedAnnotations', JSON.stringify(groupAnnotations(annotations)));
-      window.location.href = 'export.html'; // Redirect to new screen
+      window.location.href = '../export_screen/export.html'; // Redirect to new screen
     } else {
       exportToMarkdown(annotations);
     }
