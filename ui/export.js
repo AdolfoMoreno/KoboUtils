@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
       row.innerHTML = `
         <td>${title}</td>
-        <td><button onclick="downloadMarkdown('${title}')">Download</button></td>
+        <td><button class="download-btn" onclick="downloadMarkdown('${title}')">Download</button></td>
       `;
   
       exportTable.appendChild(row);
