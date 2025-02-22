@@ -3,9 +3,13 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 
 // Function to read and process KoboReader.sqlite file
-function processKoboReaderFile(directory) {
+function processKoboReaderFile(directory, isKobo) {
   const fileName = 'KoboReader.sqlite';
-  const filePath = path.join(directory, fileName);
+  let filePath = path.join(directory, fileName);
+
+  if (isKobo) {
+    // Change path to navigate to folder where file is located
+  }
 
   if (!fs.existsSync(filePath)) {
     console.log('File does not exist or you found a bug!');

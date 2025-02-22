@@ -33,6 +33,21 @@ ipcMain.handle('select-folder', async () => {
 });
 
 // Handle folder selection
+ipcMain.handle('select-sqlite', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory'],
+  });
+
+  if (!result.canceled && result.filePaths.length > 0) {
+    const folderPath = result.filePaths[0];
+    const extractedData = processKoboReaderFile(folderPath, false);
+    return extractedData;
+  }
+
+  return [];
+});
+
+// Handle folder selection
 ipcMain.handle('select-kobo', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ['openDirectory'],
@@ -40,7 +55,7 @@ ipcMain.handle('select-kobo', async () => {
 
   if (!result.canceled && result.filePaths.length > 0) {
     const folderPath = result.filePaths[0];
-    const extractedData = processKoboReaderFile(folderPath);
+    const extractedData = processKoboReaderFile(folderPath, true);
     return extractedData;
   }
 
