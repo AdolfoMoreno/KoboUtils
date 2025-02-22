@@ -1,18 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('electron', {
+contextBridge.exposeInMainWorld('electronAPI', {
   selectFolder: () => ipcRenderer.invoke('select-folder'),
+  selectSQLiteFile: () => ipcRenderer.invoke('select-sqlite'),
+  selectKoboPath: () => ipcRenderer.invoke('select-kobo'),
+  openHelp: () => ipcRenderer.invoke('help-button')
 });
-
-contextBridge.exposeInMainWorld('electron', {
-  selectFolder: () => ipcRenderer.invoke('select-sqlite'),
-});
-
-contextBridge.exposeInMainWorld('electron', {
-  selectFolder: () => ipcRenderer.invoke('select-kobo'),
-});
-
-contextBridge.exposeInMainWorld('electron', {
-  selectFolder: () => ipcRenderer.invoke('help-button'),
-});
-
