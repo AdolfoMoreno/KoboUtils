@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('sqlite3').verbose();
 
 // Function to read and process KoboReader.sqlite file
 function processKoboReaderFile(directory, isKobo) {
@@ -33,7 +33,7 @@ function processKoboReaderFile(directory, isKobo) {
 
   try {
     const stmt = db.prepare(query);
-    stmt.all((err, rows) => {
+    stmt.all((err, rows) => { // this is an async function this needs to change to a promise
       if (err) {
         throw err;
       }
