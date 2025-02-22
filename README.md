@@ -47,3 +47,5 @@ To run the tests, use the following command:
 ```sh
 npm test
 ```
+
+Preload -> Main -> Renderer

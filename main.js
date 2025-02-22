@@ -40,7 +40,7 @@ ipcMain.handle('select-kobo', async () => {
 
   if (!result.canceled && result.filePaths.length > 0) {
     const folderPath = result.filePaths[0];
-    const extractedData = processKoboReaderFile();
+    const extractedData = processKoboReaderFile(folderPath);
     return extractedData;
   }
 
