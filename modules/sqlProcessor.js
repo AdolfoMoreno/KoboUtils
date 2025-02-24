@@ -56,8 +56,7 @@ function processKoboReaderFile(directory, isKobo) {
 }
 
 function processKoboReaderFileSQL(directory) {
-  // const userDBPath = path.join(app.getPath('userData'), '..', 'kobo_utils_db.sqlite'); // Save database in user data folder
-  const userDBPath = path.join(__dirname, '..', 'kobo_utils_db.sqlite'); // Save database in user data folder
+  const userDBPath = path.join(__dirname, '..', 'kobo_utils_db.sqlite');
 
   console.log('Database stored at:', userDBPath);
   return new Promise((resolve, reject) => {
@@ -75,10 +74,9 @@ function processKoboReaderFileSQL(directory) {
     const query = `
       SELECT 
         Bookmark.VolumeID AS bookTitle, 
-        Bookmark.Text AS text, 
-        Bookmark.Annotation AS annotation
+        Bookmark.Text AS text
       FROM Bookmark
-      WHERE Bookmark.Text IS NOT NULL OR Bookmark.Annotation IS NOT NULL
+      WHERE Bookmark.Text IS NOT NULL
     `;
 
     koboDB.all(query, [], (err, rows) => {
@@ -91,57 +89,59 @@ function processKoboReaderFileSQL(directory) {
 
       const results = rows.map(row => ({
         title: row.bookTitle,
-        text: row.text ? row.text.trim() : '',
-        annotation: row.annotation ? row.annotation.trim() : ''
+        text: row.text ? row.text.trim() : ''
       }));
 
       const insertBook = userDB.prepare(`INSERT INTO books (title) VALUES (?) ON CONFLICT(title) DO NOTHING`);
       const insertQuote = userDB.prepare(`INSERT INTO quotes (book_id, text, color) VALUES (?, ?, NULL)`);
-      const insertComment = userDB.prepare(`INSERT INTO comments (quote_id, text) VALUES (?, ?)`);
 
-      rows.forEach(({ bookTitle, text, annotation }) => {
-        // Insert book and get book_id
-        insertBook.run(bookTitle);
-        userDB.get(`SELECT id FROM books WHERE title = ?`, [bookTitle], (err, book) => {
-          if (book) {
-            insertQuote.run(book.id, text, function () {
-              const quoteId = this.lastID; // Get quote_id after insertion
-              if (annotation) {
-                insertComment.run(quoteId, annotation);
-              }
-            });
-          }
+      let pendingQueries = rows.length;
+
+      rows.forEach(({ bookTitle, text }) => {
+        insertBook.run(bookTitle, function () {
+          userDB.get(`SELECT id FROM books WHERE title = ?`, [bookTitle], (err, book) => {
+            if (book) {
+              insertQuote.run(book.id, text, function () {
+                pendingQueries--;
+
+                // Finalize when all inserts are done
+                if (pendingQueries === 0) {
+                  insertBook.finalize();
+                  insertQuote.finalize();
+                  koboDB.close();
+                  userDB.close(() => resolve(rows));
+                }
+              });
+            }
+          });
         });
       });
 
-      insertBook.finalize();
-      insertQuote.finalize();
-      insertComment.finalize();
-
-      koboDB.close();
-      userDB.close(() => resolve(rows));
+      // If there are no rows, finalize immediately
+      if (rows.length === 0) {
+        insertBook.finalize();
+        insertQuote.finalize();
+        koboDB.close();
+        userDB.close(() => resolve([]));
+      }
     });
   });
 }
 
-// Function to save Kobo data to this project's database
-function saveKoboData(data) {
-  const db = new Database('Kobo_utils_db.sqlite');
-  db.serialize(() => {
-    db.run('CREATE TABLE bookmarks (title TEXT, text TEXT, annotation TEXT)');
-
-    const stmt = db.prepare('INSERT INTO bookmarks VALUES (?, ?, ?)');
-    data.forEach(row => {
-      stmt.run(row.title, row.text, row.annotation);
-    });
-    stmt.finalize();
-
-    db.each('SELECT * FROM bookmarks', (err, row) => {
-      console.log(row.title, row.text, row.annotation);
-    });
+function getQuotesByBook(bookId) {
+  return new Promise((resolve, reject) => {
+      const dbPath = path.join(__dirname, '..', 'kobo_utils_db.sqlite');
+      const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY);
+      db.all(`SELECT id, text FROM quotes WHERE book_id = ?`, [bookId], (err, rows) => {
+          if (err) {
+              console.error("Error fetching quotes:", err);
+              reject(err);
+          } else {
+              resolve(rows);
+          }
+          db.close();
+      });
   });
-
-  db.close();
 }
 
-module.exports = { processKoboReaderFile, processKoboReaderFileSQL }; 
+module.exports = { processKoboReaderFile, processKoboReaderFileSQL, getQuotesByBook }; 

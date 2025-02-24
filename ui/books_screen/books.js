@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         bookItem.textContent = book.title;
 
         bookItem.addEventListener('click', () => {
-            localStorage.setItem('selectedBook', book.title); // Store selected book
-            window.location.href = '../results_screen/results.html'; // Navigate to results
+            localStorage.setItem('selectedBook', book.id); // Store selected book
+            window.location.href = '../books_results_screen/results.html'; // Navigate to results
         });
 
         bookListContainer.appendChild(bookItem);

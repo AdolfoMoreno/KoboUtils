@@ -2,6 +2,8 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
 const { processAnnotationsDir } = require('./modules/jsonProcessor');
 const { processKoboReaderFile, processKoboReaderFileSQL } = require('./modules/sqlProcessor');
+require('./modules/handlers/getBooks');
+require('./modules/handlers/getQuotes');
 
 let mainWindow;
 
