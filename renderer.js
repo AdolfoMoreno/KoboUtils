@@ -33,6 +33,10 @@ document.getElementById('select-kobo').addEventListener('click', async () => {
   }
 });
 
+document.getElementById('view-bookmarks').addEventListener('click', () => {
+  window.location.href = 'ui/books_screen/books.html'; // Redirect to book selection page
+});
+
 document.getElementById('help-button').addEventListener('click', async () => {
-  alert('Not yet implemented');
+  alert('Not yet implemented'); // Navigate to help page
 });

@@ -1,7 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
 const { processAnnotationsDir } = require('./modules/jsonProcessor');
-const { processKoboReaderFile } = require('./modules/sqlProcessor');
+const { processKoboReaderFile, processKoboReaderFileSQL } = require('./modules/sqlProcessor');
 
 let mainWindow;
 
@@ -40,7 +40,7 @@ ipcMain.handle('select-sqlite', async () => {
 
   if (!result.canceled && result.filePaths.length > 0) {
     const folderPath = result.filePaths[0];
-    const extractedData = processKoboReaderFile(folderPath, false);
+    const extractedData = processKoboReaderFileSQL(folderPath);
     return extractedData;
   }
 

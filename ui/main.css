@@ -76,6 +76,7 @@ h1 {
   padding: 12px 25px;
   font-size: 1.1em;
   background-color: #ffcc5c; /* Soft yellow */
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
