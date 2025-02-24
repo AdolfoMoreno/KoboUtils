@@ -1,0 +1,76 @@
+/* Ensure full height without scrollbar */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Removes scrollbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f1e3;
+    /* Cozy pastel background */
+    font-family: Arial, sans-serif;
+}
+
+/* Title styling */
+h1 {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.book-list {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.book-item {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    background-color: #FFF7E6;
+    /* Soft yellow background */
+    border-radius: 12px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.book-item:hover {
+    background-color: #FFE699;
+    /* Brighter yellow */
+    transform: scale(1.02);
+    box-shadow: 0px 0px 15px rgba(255, 204, 77, 0.8);
+}
+
+/* General button styling */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #ffcc5c;
+    /* Soft yellow */
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s ease, box-shadow 0.3s, transform 0.1s ease-in-out;
+}
+
+/* Hover effect (soft glow) */
+button:hover {
+    background-color: #ffaa00;
+    box-shadow: 0px 4px 12px rgba(255, 170, 0, 0.4);
+}
+
+/* Click effect (slight shrink and darken) */
+button:active {
+    background-color: #e69500;
+    transform: scale(0.96);
+    /* Slight shrink effect */
+}

@@ -1,0 +1,116 @@
+/* Ensure full height without scrollbar */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Removes scrollbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f1e3;
+    /* Cozy pastel background */
+    font-family: Arial, sans-serif;
+}
+
+/* Title styling */
+h1 {
+    margin-bottom: 20px;
+    color: #444;
+    z-index: 1;
+}
+
+.container {
+    overflow: visible;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.list-container {
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    max-height: calc(100vh - 150px);
+    padding: 20px;  /* Adds spacing around the container */
+    margin: 0 auto; /* Centers the container */
+    max-width: 80%;  /* Adjusts width dynamically */
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.list-item {
+    position: relative;
+    z-index: 10; /* Keeps it above other normal elements */
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: #ffcc5c;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background-color: #ffaa00;
+}
+
+/* Tooltip Menu Styling */
+.tooltip-menu {
+    position: absolute;
+    bottom: 90%; /* Move tooltip above */
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px); /* Center it horizontally */
+    display: flex;
+    gap: 8px;
+    background: white;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    z-index: 1000; /* Make sure it stays on top */
+}
+
+/* Show tooltip on hover */
+.list-item:hover .tooltip-menu {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(-15px); /* Slightly lift up */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.tooltip-menu button {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.tooltip-menu button:hover {
+    background: #ddd;
+}
+
+
+
+/* Optional: Customize the scrollbar for a sleek look */
+.list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 4px;
+}
+
+.list-container::-webkit-scrollbar-track {
+    background: #333;
+}
