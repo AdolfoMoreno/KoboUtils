@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 function groupAnnotations(data) {
     const groupedAnnotations = {};
 
-    data.forEach(({ book_id, id, text }) => {
+    data.forEach(({ book_id, text }) => {
         const cleanTitle = book_id; // Remove invalid filename characters
         const cleanText = text.replace(/\s+/g, ' ').trim(); // Normalize spaces
 

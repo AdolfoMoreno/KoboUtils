@@ -85,7 +85,7 @@ h1 {
     z-index: 1000; /* Ensure it's above other elements */
 }
 
-.tooltip-menu button {
+.tooltip-menu {
     background: white;
     border: 1px solid #ddd;
     padding: 6px 10px;
@@ -95,7 +95,7 @@ h1 {
     transition: 0.2s;
 }
 
-.tooltip-menu button:hover {
+.tooltip-menu {
     background: #ddd;
 }
 
