@@ -114,3 +114,21 @@ h1 {
 .list-container::-webkit-scrollbar-track {
     background: #333;
 }
+
+/* Buttons */
+button {
+    background: #f4b860;
+    color: white;
+    font-size: 16px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0px 4px 8px rgba(244, 184, 96, 0.3);
+  }
+  
+  button:hover {
+    background: #e4a24d;
+    transform: scale(1.05);
+  }

@@ -60,4 +60,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         resultsList.appendChild(quoteItem);
     });
+
+    document.getElementById('export-md').addEventListener('click', () => {
+        exportToMarkdown(quotes);
+    });
 });
+
+function groupAnnotations(data) {
+    const groupedAnnotations = {};
+
+    data.forEach(({ book_id, id, text }) => {
+        const cleanTitle = book_id; // Remove invalid filename characters
+        const cleanText = text.replace(/\s+/g, ' ').trim(); // Normalize spaces
+
+        if (!groupedAnnotations[cleanTitle]) {
+            groupedAnnotations[cleanTitle] = [];
+        }
+        groupedAnnotations[cleanTitle].push(`> ${cleanText}`);
+    });
+
+    return groupedAnnotations;
+}
+
+function exportToMarkdown(data) {
+    let markdownContent = "";
+    const groupedAnnotations = groupAnnotations(data);
+
+    Object.entries(groupedAnnotations).forEach(([book_id, texts]) => {
+        markdownContent += `# ${book_id}\n\n${texts.join('\n\n')}\n\n`;
+    });
+
+    saveMarkdownFile(markdownContent, "annotations.md");
+}
+
+function saveMarkdownFile(content, filename) {
+    const blob = new Blob([content], { type: "text/markdown" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

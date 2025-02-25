@@ -3,7 +3,7 @@ document.getElementById('select-kobo').addEventListener('click', async () => {
 
   if (data.length > 0) {
     localStorage.setItem('sql_annotations', JSON.stringify(data));
-    window.location.href = 'ui/results_screen/results.html'; // Navigate to results page
+    window.location.href = 'ui/books_results_screen/results.html'; // Navigate to results page
   } else {
     alert('No annotations found or action was cancelled.');
   }
